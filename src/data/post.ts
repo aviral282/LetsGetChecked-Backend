@@ -1,3 +1,5 @@
+import { Comments } from "./comment";
+
 export class Post{
     id;
     title;

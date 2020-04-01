@@ -34,7 +34,9 @@ export class PostsService {
             this.getPostById(postId).activity.push(comment);
         } else {
             this.getPostById(postId).activity.forEach(element => {
-                this.findParent(parentId, element).replies.push(comment);
+                const foundParent = this.findParent(parentId, element);
+                if(foundParent != null)
+                    foundParent.replies.push(comment)
             });
         }
     }
@@ -85,22 +87,10 @@ export class PostsService {
         return cloneDeep(this.posts).filter(post => delete post.activity);
     }
 
-    async readFile(filePath) {
-        return new Promise(function(resolve, reject) {
-            fs.readFile(filePath, 'utf-8', (err, data) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(JSON.parse(data));
-                }
-            });
-        });
-    }
-
     addCommentOnPost(postId, comment: Comments) {
         const foundPost = this.getPostById(postId);
-        if(foundPost.hasOwnProperty('code'))
-            return foundPost;
+        if(!foundPost.hasOwnProperty('slug'))
+            return { 'code': 10, 'message': 'Post Not Found' };
 
         comment['postId'] = postId;
         this.addToTree(comment);
@@ -132,5 +122,17 @@ export class PostsService {
         }else{
             return {'code' : 2, 'success' : 'Successfully updated comment'}
         }
+    }
+
+    async readFile(filePath) {
+        return new Promise(function(resolve, reject) {
+            fs.readFile(filePath, 'utf-8', (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(JSON.parse(data));
+                }
+            });
+        });
     }
 }

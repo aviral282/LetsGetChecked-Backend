@@ -1,15 +1,17 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { PostsService } from './posts.service';
+import { Comments } from '../data/comment';
 
 @Controller('posts')
 export class PostsController {
 
     constructor(
-        private readonly _postsService: PostsService) { }
+        private readonly _postsService: PostsService) {
+    }
 
     @Get('/')
-    async getAllPosts(){
-        return await this._postsService.getAllPosts();
+    async getAllPosts() {
+        return this._postsService.getAllPosts();
     }
 
     @Get(':id')
@@ -19,6 +21,16 @@ export class PostsController {
 
     @Get(':id/comments')
     async getPostComments(@Param('id') id) {
-        return await this._postsService.getPostComments(id);
+        return this._postsService.getPostComments(id);
+    }
+
+    @Post(':id/comments')
+    async addComment(@Param('id') id, @Body() comment: Comments) {
+        return this._postsService.addCommentOnPost(id, comment);
+    }
+
+    @Put('/comments/:id')
+    async updateComment(@Param('id') toChangeID, @Body() comment: Comments) {
+        return this._postsService.updateCommentOfId(toChangeID, comment);
     }
 }

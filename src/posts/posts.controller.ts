@@ -29,11 +29,6 @@ export class PostsController {
         return this._postsService.addCommentOnPost(id, comment);
     }
 
-    @Post('posts/:id/comments')
-    async addComment(@Param('id') id, @Body() comment: Comments) {
-        return this._postsService.addCommentOnPost(id, comment);
-    }
-
     @Put('comments/:id')
     async updateComment(@Param('id') toChangeID, @Body() comment: Comments) {
         return this._postsService.updateCommentOfId(toChangeID, comment);

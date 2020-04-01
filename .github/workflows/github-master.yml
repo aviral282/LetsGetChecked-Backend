@@ -1,0 +1,26 @@
+name: Github CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Setup NodeJS
+      uses: actions/setup-node@v1.1.0
+      
+    - name: Install Nest & Packages
+      run: |
+        npm i -g @nestjs/cli
+        npm i
+    
+    - name: Build Project
+      run: npm run build

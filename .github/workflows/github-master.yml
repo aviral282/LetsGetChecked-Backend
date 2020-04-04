@@ -28,21 +28,22 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@v1.1.0
 
-      - name: Install Packages
-        run: npm i
-
-      - name: Build Project
-        run: npm run build
-
       - name: Setup Heroku & Login
         run: |
           curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
           openssl aes-256-cbc -K ${{ secrets.HEROKU_KEY }} -iv ${{ secrets.HEROKU_IV }} -in .github/files/.heroku-conf.enc -out ~/.netrc -d
           heroku git:remote -a lets-get-checked-backend
 
+      - name: Install Packages
+        run: npm i
+
+      - name: Build Project
+        run: npm run build
+
       - name: Deploy on Heroku
         run: |
           git config user.name "Github Actions"
           git config user.email "noreply@actions.com"
+
           cp .github/files/heroku-gitignore .gitignore
-          git add . && git commit -m "Auto update on Heroku" && git push heroku master
+          git add . && git commit -m "Auto update on Heroku" && git push heroku master -f

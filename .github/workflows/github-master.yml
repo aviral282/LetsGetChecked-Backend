@@ -13,6 +13,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - run: |
+          git fetch --prune --unshallow
 
       - uses: actions/cache@master
         with:
@@ -40,7 +42,6 @@ jobs:
 
       - name: Deploy on Heroku
         run: |
-          "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
           git config user.name "Github Actions"
           git config user.email "noreply@actions.com"
           cp .github/files/heroku-gitignore .gitignore

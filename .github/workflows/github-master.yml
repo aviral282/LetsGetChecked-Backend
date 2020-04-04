@@ -14,9 +14,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/cache@v1
+      - uses: actions/cache@master
         with:
-          path: ~/.npm
+          path: |
+            ~/.npm
+            /usr/bin/heroku
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-

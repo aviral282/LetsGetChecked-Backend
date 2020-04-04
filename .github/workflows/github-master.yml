@@ -26,9 +26,6 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@v1.1.0
 
-      - name: Unshallow Repo
-        run: git fetch --all --unshallow
-
       - name: Install Packages
         run: npm i
 
@@ -43,6 +40,7 @@ jobs:
 
       - name: Deploy on Heroku
         run: |
+          "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
           git config user.name "Github Actions"
           git config user.email "noreply@actions.com"
           cp .github/files/heroku-gitignore .gitignore

@@ -1,6 +1,7 @@
 # compiled output
 # /dist
 .npm/
+usr/bin/heroku
 /node_modules
 
 # Logs

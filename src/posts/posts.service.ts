@@ -35,8 +35,8 @@ export class PostsService {
         } else {
             this.getPostById(postId).activity.forEach(element => {
                 const foundParent = this.findParent(parentId, element);
-                if(foundParent != null)
-                    foundParent.replies.push(comment)
+                if (foundParent != null)
+                    foundParent.replies.push(comment);
             });
         }
     }
@@ -89,7 +89,7 @@ export class PostsService {
 
     addCommentOnPost(postId, comment: Comments) {
         const foundPost = this.getPostById(postId);
-        if(!foundPost.hasOwnProperty('slug'))
+        if (!foundPost.hasOwnProperty('slug'))
             return { 'code': 10, 'message': 'Post Not Found' };
 
         comment['postId'] = postId;
@@ -97,7 +97,7 @@ export class PostsService {
         return { 'code': 2, 'success': 'Successfully added comment' };
     }
 
-    findCommentById(commentId) : Comments{
+    findCommentById(commentId): Comments {
         for (let i = 0; i < this.posts.length; i++) {
             const post = this.posts[i];
             for (let j = 0; j < post.activity.length; j++) {
@@ -118,9 +118,9 @@ export class PostsService {
             foundComment.user = comment.user;
             foundComment.content = comment.content;
             foundComment.date = comment.date;
-            return {'code' : 2, 'success' : 'Successfully updated comment'};
-        }else{
-            return {'code' : 2, 'success' : 'Successfully updated comment'}
+            return { 'code': 2, 'success': 'Successfully updated comment' };
+        } else {
+            return { 'code': 2, 'success': 'Successfully updated comment' };
         }
     }
 

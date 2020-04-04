@@ -1,7 +1,7 @@
-export class Comments{
+export class Comments {
     id;
     user;
     date;
     content;
-    replies : Comments[] = [];
+    replies: Comments[] = [];
 }

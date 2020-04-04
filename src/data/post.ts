@@ -1,6 +1,6 @@
-import { Comments } from "./comment";
+import { Comments } from './comment';
 
-export class Post{
+export class Post {
     id;
     title;
     author;
@@ -8,5 +8,5 @@ export class Post{
     slug;
     description;
     content;
-    activity : Comments[] = [];
+    activity: Comments[] = [];
 }

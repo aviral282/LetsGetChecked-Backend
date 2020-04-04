@@ -8,6 +8,7 @@ import { Comments } from 'src/data/comment';
 export class PostsService {
 
     posts: Post[] = [];
+    comment_id_generator = 0;
 
     constructor() {
         this.readFile('src/assets/data.json').then(data => {
@@ -29,6 +30,8 @@ export class PostsService {
         delete comment.postId;
         delete comment.parent_id;
         comment.replies = [];
+
+        this.comment_id_generator++;
 
         if (parentId == null) {
             this.getPostById(postId).activity.push(comment);
@@ -92,6 +95,7 @@ export class PostsService {
         if (!foundPost.hasOwnProperty('slug'))
             return { 'code': 10, 'message': 'Post Not Found' };
 
+        comment['id'] = this.comment_id_generator;
         comment['postId'] = postId;
         this.addToTree(comment);
         return { 'code': 2, 'success': 'Successfully added comment' };
@@ -120,7 +124,7 @@ export class PostsService {
             foundComment.date = comment.date;
             return { 'code': 2, 'success': 'Successfully updated comment' };
         } else {
-            return { 'code': 2, 'success': 'Successfully updated comment' };
+            return { 'code': 10, 'message': 'Comment not found' };
         }
     }
 

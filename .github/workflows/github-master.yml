@@ -44,6 +44,6 @@ jobs:
         run: |
           git config user.name "Github Actions"
           git config user.email "noreply@actions.com"
-
+          touch add-simple-file
           cp .github/files/heroku-gitignore .gitignore
           git add . && git commit -m "Auto update on Heroku" && git push heroku master -f
